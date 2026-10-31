@@ -1,0 +1,144 @@
+import Link from "@/components/OfflineLink";
+import PageContainer from "@/components/PageContainer";
+import PageHeading from "@/components/PageHeading";
+import StatCard from "@/components/StatCard";
+import LessonCard from "@/components/LessonCard";
+import LanguageSelector from "@/components/LanguageSelector";
+
+const DEMO_LESSONS = [
+  {
+    id: "1",
+    title: "Plants Around Us (हमारे आसपास के पौधे)",
+    grade: "Grade 2",
+    subject: "Environmental Studies",
+    sourceLang: "Hindi",
+    targetLang: "Santhali",
+    status: "Verified" as const,
+    activityCount: 8,
+    studentUrl: "/student?id=demo-plants",
+  },
+  {
+    id: "2",
+    title: "Numbers 1–20 (संख्याएँ 1 से 20)",
+    grade: "Grade 1",
+    subject: "Mathematics",
+    sourceLang: "Hindi",
+    targetLang: "Santhali",
+    status: "Verified" as const,
+    activityCount: 10,
+    studentUrl: "/student?id=demo-counting",
+  },
+  {
+    id: "3",
+    title: "Animals Around Us (हमारे आसपास के जानवर)",
+    grade: "Grade 3",
+    subject: "Science",
+    sourceLang: "Hindi",
+    targetLang: "Santhali",
+    status: "Draft" as const,
+    activityCount: 6,
+    studentUrl: "/student?id=demo-animals",
+  },
+];
+
+export default function TeacherDashboard() {
+  return (
+    <PageContainer className="flex flex-col gap-8">
+      <PageHeading eyebrow="A little preparation. A world of possibility." title={<>Your classroom, <span>in their language.</span></>} description="Create thoughtful lessons, review translations, and help every child feel at home in learning.">
+        <Link href="/create-lesson" className="primary-action">Create Lesson <span>→</span></Link>
+        <Link href="/lessons" className="secondary-action">Open Lesson Library</Link>
+      </PageHeading>
+
+      {/* Language Area Indicator */}
+      <LanguageSelector sourceLang="Hindi" targetLang="Santhali" />
+
+      {/* Dashboard Statistics */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-slate-900">
+            Overview Metrics
+          </h2>
+          <span className="text-xs font-semibold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+            Demonstration Metrics
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <StatCard
+            label="Lessons Created"
+            value="12"
+            description="Total Hindi lessons adapted for primary grades"
+            accentColor="amber"
+            icon={<span className="text-lg">📖</span>}
+          />
+          <StatCard
+            label="Verified Lessons"
+            value="9"
+            description="Reviewed & approved Santhali translation kits"
+            accentColor="emerald"
+            icon={<span className="text-lg">✅</span>}
+          />
+          <StatCard
+            label="Learning Activities"
+            value="24"
+            description="Interactive flashcards and classroom prompts"
+            accentColor="blue"
+            icon={<span className="text-lg">🎨</span>}
+          />
+        </div>
+      </div>
+
+      {/* Recent Lessons Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+              Recent Demonstration Lessons
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600">
+              Curriculum units ready for mother-tongue classroom learning
+            </p>
+          </div>
+
+          <Link
+            href="/create-lesson"
+            className="text-xs sm:text-sm font-semibold text-amber-700 hover:text-amber-800 hover:underline"
+          >
+            + Add Another Lesson
+          </Link>
+        </div>
+
+        {/* Lesson Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {DEMO_LESSONS.map((lesson) => (
+            <LessonCard key={lesson.id} {...lesson} />
+          ))}
+        </div>
+      </div>
+
+      {/* Teacher Guide Box */}
+      <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5 text-xs sm:text-sm text-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-lg shrink-0">
+            💡
+          </div>
+          <div>
+            <p className="font-semibold text-slate-900">
+              How VaaniShiksha helps in your classroom:
+            </p>
+            <p className="text-slate-600 text-xs sm:text-sm">
+              Enter standard textbook lesson text, generate Santhali vocabulary flashcards, and preview how primary students see the lesson.
+            </p>
+          </div>
+        </div>
+
+        <Link
+          href="/create-lesson"
+          className="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-900 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors shrink-0"
+        >
+          Try Lesson Creation ➔
+        </Link>
+      </div>
+    </PageContainer>
+  );
+}

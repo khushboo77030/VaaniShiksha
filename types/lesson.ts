@@ -1,0 +1,103 @@
+export interface LearningKit {
+  title: string;
+  sourceLanguage: "Hindi" | "English" | "Hinglish";
+  targetLanguage: "Santhali" | "English" | "Hindi" | "Hinglish";
+  grade: string;
+  subject: string;
+  lesson: {
+    hindi: string;
+    santhali: string;
+    romanization: string;
+    simpleExplanation: string;
+    audioId?: string;
+  };
+  vocabulary: Array<{
+    hindi: string;
+    santhali: string;
+    romanization: string;
+    meaning: string;
+    audioId?: string;
+  }>;
+  flashcards: Array<{
+    front: string;
+    back: string;
+    audioId?: string;
+  }>;
+  quiz: Array<{
+    question: string;
+    options: [string, string, string, string];
+    correctAnswer: string;
+  }>;
+  activity: {
+    title: string;
+    instructions: string;
+  };
+  quality: {
+    reviewRequired: boolean;
+    confidence: "high" | "medium" | "low";
+    reviewNotes: string;
+  };
+  pedagogy?: {
+    learningOutcome: string;
+    skillFocus: string;
+    suggestedNipunAlignment: string;
+    activityType: string;
+    assessmentFocus: string;
+  };
+  worksheet?: {
+    title: string;
+    instructionsHindi: string;
+    instructionsSanthali: string;
+    items: Array<WorksheetItem>;
+  };
+  verificationStatus?: "ai_generated" | "needs_review" | "verified";
+  verifiedAt?: string;
+  verifiedBy?: string;
+}
+
+export interface WorksheetItem {
+  type: "match" | "fill" | "identify" | "circle" | "trace" | "short_answer";
+  promptHindi: string;
+  promptSanthali: string;
+  answer?: string;
+  audioId?: string;
+}
+
+export interface SavedLesson {
+  id: string;
+  title: string;
+  grade: string;
+  subject: string;
+  sourceLanguage: "Hindi" | "English" | "Hinglish";
+  targetLanguage: "Santhali" | "English" | "Hindi" | "Hinglish";
+  createdAt: string;
+  updatedAt: string;
+  kit: LearningKit;
+  verificationStatus: "ai_generated" | "needs_review" | "verified";
+  verifiedAt?: string;
+  verifiedBy?: string;
+}
+
+export interface GenerateLessonRequest {
+  title: string;
+  lessonText: string;
+  grade: string;
+  subject: string;
+  targetLanguage: "Santhali" | "English" | "Hindi" | "Hinglish";
+}
+
+export type GenerateLessonResponse =
+  | {
+      success: true;
+      data: LearningKit;
+    }
+  | {
+      success: false;
+      error: string;
+    };
+
+export interface AudioRecord {
+  id: string;
+  blob: Blob;
+  lessonId: string;
+}
